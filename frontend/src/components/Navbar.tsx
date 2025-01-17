@@ -2,32 +2,22 @@ import { Link } from "react-router-dom";
 import TmsLogo from "../assets/tms-logo.jpeg";
 
 const Navbar = () => {
-  return (
-    <header
-      className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 
-    backdrop-blur-lg bg-base-100/80"
-    >
+  return ( <header className="border-b fixed w-full top-0 z-40">
 
       <div className="container mx-auto px-4 h-16">
 
-        <div className="h-full">
+        <div className="flex items-center h-full">
 
-          <div className="flex items-center gap-8">
-            <Link to="/"
-              className="flex items-center gap-2.5 hover:opacity-80 transition-all"
-            >
-              <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
-                <img src={TmsLogo} alt="Tms Logo" className="w-[20px]"/>
-              </div>
-              <h1 className="text-lg font-bold">Tms Log System</h1>
+            <Link to="/" className="flex items-center gap-2.5 hover:opacity-80 transition-all">
+              <img src={TmsLogo} alt="Tms Logo" className="h-10 rounded-md" />
+              <h1 className="text-2xl font-bold">TMS Log System</h1>
             </Link>
-          </div>
-
+        
         </div>
 
       </div>
-    </header>
-  );
+
+    </header>);
 };
 
 export default Navbar;

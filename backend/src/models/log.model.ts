@@ -20,11 +20,7 @@ const LogSchema: Schema = new Schema({
      },
     expense: { type: Number },
     profit: { type: Number },
-    completed: { 
-        type: Boolean, 
-        default: false
-    },
-    comments: { type: String }
+    comments: { type: String },
 }, { timestamps: true });
 
 
