@@ -1,53 +1,15 @@
-import { ChangeEvent } from 'react';
+import React, { InputHTMLAttributes } from "react";
 
-interface InputProps {
-    label?: string;
-    type?: 'text' | 'number' | 'date' | 'textarea';
-    placeholder?: string;
-    name?: string;
-    value?: string | number | Date;
-    onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    required?: boolean;
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
-
-const Input: React.FC<InputProps> = ({
-                                        label,
-                                        type,
-                                        placeholder,
-                                        name,
-                                        value,
-                                        onChange,
-                                        required,
-                                    }) => {
+const Input: React.FC<InputProps> = ({ ...props }) => {
     return (
-        <div className="form-control">
-            <label className="label label-xs text-gray-700">
-              <span className="label-text-alt">{label}</span>
-            </label>
-            {type === 'textarea' ? (
-                <textarea
-                    className="textarea textarea-sm text-gray-800 focus:ring-2 focus:ring-gray-300 focus:outline-none rounded"
-                    placeholder={placeholder}
-                    name={name}
-                    value={value as string}
-                    onChange={onChange}
-                />
-            ) : (
-                <input
-                    type={type}
-                    placeholder={placeholder}
-                    className="input input-sm text-gray-800 focus:ring-2 focus:ring-gray-300 focus:outline-none rounded"
-                    name={name}
-                    value={type === 'date' ? (value as Date).toISOString().split('T')[0]: value}
-                    onChange={onChange}
-                    required={required}
-                />
-            )}
-
-        </div>
+        <input
+            {...props}
+            className="px-3 py-2 bg-white text-gray-800 focus:ring-2 focus:ring-gray-300 focus:outline-none rounded border border-gray-300"
+        />
     );
 };
-
 
 export default Input;

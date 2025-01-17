@@ -1,10 +1,11 @@
+
 import Log from "../assets/types/Log";
 import { useLogStore } from "../store/useLogStore";
 
 const LogsTable = () => {
     const { logs } = useLogStore();
 
-    return(<div className="mt-3 bg-white shadow-md p-6 rounded-xl border border-gray-200">
+    return(<div className="bg-white shadow-md p-6 rounded-xl border border-gray-200">
 
           <div className="overflow-x-auto">
 
