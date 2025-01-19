@@ -1,37 +1,27 @@
-import React, { Dispatch, SetStateAction, ChangeEvent } from 'react';
 import Input from './Input';
-import Log from '../assets/types/Log';
-
+import { Plus, X } from 'lucide-react';
 
 interface LogFormProps {
-  newLog: Log;
-  setNewLog: Dispatch<SetStateAction<Log>>;
-  addLog: (e: React.FormEvent) => void;
   onClose: () => void;
-  handleInputChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
 }
 
-const LogForm: React.FC<LogFormProps> = ({ newLog, addLog, onClose, handleInputChange }) => {
+const LogForm: React.FC<LogFormProps> = ({ onClose }) => {
   return (
-    <div className="bg-white shadow-md p-6 mb-6 rounded-xl border border-gray-200">
+    <div className="bg-white shadow-md p-4 sm:p-6 mb-6 rounded-xl border border-gray-200 w-full md:w-[90%] lg:w-[80%] xl:w-[70%]">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">הוספת תיקון</h2>
-      <form onSubmit={addLog} className="space-y-2">
-        <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
-          
+      <form className="space-y-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+
           <Input
             label="תאריך"
             type="date"
             name="date"
-            value={newLog.date}
-            onChange={(e) => handleInputChange({ target: { name: 'date', value: new Date(e.target.value) } })}
           />
           <Input
             label="שם לקוח"
             type="text"
             placeholder="הכנס שם לקוח"
             name="name"
-            value={newLog.name}
-            onChange={handleInputChange}
             required
           />
           <Input
@@ -39,8 +29,6 @@ const LogForm: React.FC<LogFormProps> = ({ newLog, addLog, onClose, handleInputC
             type="text"
             placeholder="הכנס דגם מכשיר"
             name="deviceModel"
-            value={newLog.deviceModel}
-            onChange={handleInputChange}
             required
           />
           <Input
@@ -48,32 +36,24 @@ const LogForm: React.FC<LogFormProps> = ({ newLog, addLog, onClose, handleInputC
             type="text"
             placeholder="הכנס IMEI"
             name="imei"
-            value={newLog.imei}
-            onChange={handleInputChange}
           />
           <Input
             label="תיאור התקלה"
             type="text"
             placeholder="הכנס תיאור תקלה"
             name="faultDescription"
-            value={newLog.faultDescription}
-            onChange={handleInputChange}
           />
           <Input
             label="תיאור תיקון"
             type="text"
             placeholder="הכנס תיאור תיקון"
             name="repairDescription"
-            value={newLog.repairDescription}
-            onChange={handleInputChange}
           />
           <Input
             label="מחיר תיקון"
             type="number"
             placeholder="הכנס מחיר תיקון"
             name="fixingPrice"
-            value={newLog.fixingPrice}
-            onChange={handleInputChange}
             required
           />
           <Input
@@ -81,39 +61,36 @@ const LogForm: React.FC<LogFormProps> = ({ newLog, addLog, onClose, handleInputC
             type="number"
             placeholder="הכנס עלות חלקים"
             name="expense"
-            value={newLog.expense}
-            onChange={handleInputChange}
-          />
-          <Input
-            label="הערות"
-            type="textarea"
-            placeholder="הכנס הערות"
-            name="comments"
-            value={newLog.comments}
-            onChange={handleInputChange}
           />
           <Input
             label="מספר תיקון"
             type="number"
             placeholder="הכנס מספר תיקון"
             name="id"
-            value={newLog.id}
-            onChange={handleInputChange}
           />
 
-          <div className="col-span-3 md:col-span-4 flex justify-end">
+          <Input
+            label="הערות"
+            type="textarea"
+            placeholder="הכנס הערות"
+            name="comments"
+          />
+
+
+
+          <div className="col-span-full  flex justify-end mt-4">
             <button type="submit"
-              className="btn btn-sm bg-green-500 hover:bg-green-600 text-white rounded">
+              className="flex items-center gap-2 btn btn-sm bg-green-500 hover:bg-green-600 text-white rounded">
+                <Plus size={16}/>
               הוסף תיקון
             </button>
             <button type="button"
               onClick={onClose}
-              className="btn btn-sm bg-red-500 hover:bg-red-600 text-white rounded mr-2">
+              className="flex items-center gap-2 btn btn-sm bg-red-500 hover:bg-red-600 text-white rounded mr-2">
+                <X size={16}/>
               בטל
             </button>
           </div>
-
-
         </div>
       </form>
     </div>

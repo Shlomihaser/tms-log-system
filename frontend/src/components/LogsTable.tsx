@@ -1,5 +1,5 @@
 
-import Log from "../assets/types/Log";
+import Log from "../types/Log";
 import { useLogStore } from "../store/useLogStore";
 
 const LogsTable = () => {

@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { axiosInstance } from '../lib/axios';
 import toast from 'react-hot-toast';
-import Log from '../assets/types/Log';
-import LogStore from '../assets/types/LogStore';
+import Log from '../types/Log';
+import LogStore from '../types/LogStore';
 
 
 export const useLogStore = create<LogStore>((set) => ({

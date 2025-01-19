@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 import LogForm from './LogForm';
 import LogsTableDisplay from './LogsTable';
-import Log from '../assets/types/Log';
+import Log from '../types/Log';
 
 
 const Logs = () => {
