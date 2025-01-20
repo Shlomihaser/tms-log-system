@@ -1,8 +1,8 @@
-import { Toaster } from 'react-hot-toast'
-import LogsTable from './components/Logs'
-import Navbar from './components/Navbar'
-import './index.css'
-import MainSection from './components/MainSection'
+import Navbar from './components/Navbar';
+import MainSection from './components/MainSection';
+import { Toaster } from 'react-hot-toast';
+
+import './index.css';
 
 export default function App() {
   return (<div>

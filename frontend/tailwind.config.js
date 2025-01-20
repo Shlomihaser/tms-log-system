@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [daisyui],
+  plugins: ["prettier-plugin-tailwindcss"],
   daisyui: {
     themes: []
   }

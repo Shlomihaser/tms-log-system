@@ -9,7 +9,7 @@ interface Log {
   fixingPrice: number;
   expense: number;
   profit: number;
-  completed: boolean;
+  completed?: boolean;
   comments: string;
 }
 

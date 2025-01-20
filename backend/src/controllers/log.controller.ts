@@ -35,7 +35,6 @@ export const addLog = async (req: Request, res: Response) : Promise<any> => {
             return res.status(400).json({ message: "Fill all the required inputs" });
         
         const newLog = new Log(log);
-        console.log(newLog);
         if (newLog) await newLog.save();
         else res.status(400).json({ message: "Invalid user data" });
         res.status(200).json(newLog)
