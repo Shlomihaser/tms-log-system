@@ -9,9 +9,9 @@ router.get("/:id",getLogById);
 
 router.post("/add-log",addLog);
 
-router.put("/update-log/:id",updateLog);
+router.put("/:id",updateLog);
 
-router.delete("/delete-log/:id",deleteLog);
+router.delete("/:id",deleteLog);
 
 export default router;
 

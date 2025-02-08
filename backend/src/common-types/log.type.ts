@@ -11,8 +11,9 @@ interface ILog extends Document {
     exspense: number,
     profit: number,
     completed: boolean,
+    fixNumber: number,
+    tableColor: string,
     comments:string,
-    isStarred: boolean
 }
 
 export default ILog;

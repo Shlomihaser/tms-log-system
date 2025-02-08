@@ -7,9 +7,7 @@ import './index.css';
 export default function App() {
   return (<div>
     <Navbar/>
-
     <MainSection/>
-
     <Toaster/> {/* Active Toasts */}
   </div>)
 }

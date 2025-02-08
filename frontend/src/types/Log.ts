@@ -1,5 +1,5 @@
 interface Log {
-  id: number;
+  _id: string;
   name: string;
   date: Date;
   deviceModel: string;
@@ -10,6 +10,8 @@ interface Log {
   expense: number;
   profit: number;
   completed?: boolean;
+  fixNumber: number;
+  tableColor: string;
   comments: string;
 }
 

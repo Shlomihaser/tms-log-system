@@ -20,6 +20,8 @@ const LogSchema: Schema = new Schema({
      },
     expense: { type: Number },
     profit: { type: Number },
+    fixNumber: { type: Number },
+    tableColor: { type: String },
     comments: { type: String },
 }, { timestamps: true });
 
