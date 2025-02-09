@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import Log from "../types/Log";
-import { useLogStore } from "../store/useLogStore";
+import  useLogStore  from "../store/useLogStore";
 import { ArrowDown, ArrowUp, Edit, Palette, Trash } from "lucide-react";
 import LogForm from "./LogForm";
 import IconButton from "./common/IconButton";
@@ -39,11 +39,7 @@ const LogsTable = () => {
   return (
     <div className="bg-white shadow-md p-6 rounded-xl border border-gray-200">
       {editLog && (
-        <LogForm
-          title="עריכת תיקון"
-          onClose={() => setEditLog(null)}
-          currentLog={editLog}
-        />
+        <LogForm title="עריכת תיקון" currentLog={editLog} onClose={() => setEditLog(null)}/>
       )}
 
       <div className="overflow-y-auto scrollbar-hidden max-h-[70vh]">

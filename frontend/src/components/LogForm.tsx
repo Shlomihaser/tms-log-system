@@ -52,7 +52,6 @@ const LogForm = ({ currentLog, title, onClose }: LogFormProps) => {
       comments,
       profit: parsedFixingPrice - parsedExpense,
     };
-
     await handleLogSubmit(newLog);
   };
 
@@ -60,7 +59,7 @@ const LogForm = ({ currentLog, title, onClose }: LogFormProps) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div className="bg-white shadow-md rounded-xl border border-gray-200 w-full max-h-[90vh] overflow-y-auto sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] xl:max-w-[60%] p-4 sm:p-6">
         <h2 className="text-xl font-semibold mb-4 text-gray-800">{title}</h2>
-        <form ref={formRef} className="space-y-2" onSubmit={handleSubmit}>
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-2">
           {/* Inputs */}
           <div className="space-y-2  sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             <Input label="תאריך" type="date" name="date" value={date.toISOString().split('T')[0]} onChange={(e) => setDate(new Date(e.target.value))}/>

@@ -43,7 +43,7 @@ const useLogsSorting = ({ logs }: UseLogsSortingProps) => {
         return newDirection
       });
     },
-    [logs, sortColumn, sortDirection] // Include sortColumn and sortDirection in the dependency array
+    [logs, sortColumn, sortDirection] 
   );
 
   return {
