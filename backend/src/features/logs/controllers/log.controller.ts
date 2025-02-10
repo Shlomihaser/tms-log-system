@@ -5,27 +5,12 @@ import Log from "../models/log.model.js";
 export const getLogs = async (req: Request, res: Response) : Promise<any>  => {
     try {
         const logs = await Log.find();
-
         res.status(200).json(logs);
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
-
-export const getLogById = async (req: Request, res: Response) :Promise<any> => {
-    const logId  = req.params.id;
-
-    try {
-        const log = await Log.findById(logId);
-        if(!log)
-            res.status(400).json({ message : "Failed to fetch log"});
-        res.status(200).json(log);
-    } catch (error) {
-        res.status(500).json({ message: "Internal Server Error" });
-    }
-}
-
 
 export const addLog = async (req: Request, res: Response) : Promise<any> => {
     const log = req.body;

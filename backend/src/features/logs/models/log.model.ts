@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
-import ILog from '../common-types/log.type.js';
+import ILog from '../types/log.type.js';
 
 const LogSchema: Schema = new Schema({
     name: {  type: String , required: true},
