@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { useCallback } from "react";
 import toast from "react-hot-toast";
 import Log from "../types/Log";
 import axios from 'axios';
@@ -22,12 +21,12 @@ export const axiosInstance = axios.create({
 
 const useLogStore = create<LogStore>((set, get) => {
   
-  const handleApiError = useCallback((error: any) => {
+  const handleApiError = (error: any) => {
     console.error("API Error:", error);
     toast.error(
       error.response?.data.message || error.message || "An error occurred."
     );
-  }, []);
+  };
 
   return {
     logs: [],

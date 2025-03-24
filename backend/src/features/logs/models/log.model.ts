@@ -2,21 +2,18 @@ import mongoose, { Schema, Model } from 'mongoose';
 import ILog from '../types/log.type.js';
 
 const LogSchema: Schema = new Schema({
-    name: {  type: String , required: true},
+    name: {  type: String },
     date: {
         type:Date,
-        default: Date.now
     },
     deviceModel: { 
-        type: String , 
-        required:true
+        type: String, 
     },
     imei: { type: String },
     faultDescription: { type: String },
     repairDescription: { type: String},
     fixingPrice: { 
         type: Number,
-        required:true
      },
     expense: { type: Number },
     profit: { type: Number },

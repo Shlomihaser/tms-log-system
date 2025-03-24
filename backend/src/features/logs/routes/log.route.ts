@@ -1,16 +1,17 @@
 import express from "express";
 
 import { addLog, updateLog, deleteLog , getLogs} from "../controllers/log.controller.js";
+import { protectRoute } from "../../shared/middlewares/protectRoute.js";
 
 const router = express.Router();
 
-router.get("/",getLogs);
+router.get("/",protectRoute,getLogs);
 
-router.post("/add-log",addLog);
+router.post("/add-log",protectRoute,addLog);
 
-router.put("/:id",updateLog);
+router.put("/:id",protectRoute,updateLog);
 
-router.delete("/:id",deleteLog);
+router.delete("/:id",protectRoute,deleteLog);
 
 export default router;
 

@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser';
 import logRoutes from "./features/logs/routes/log.route.js";
 import authRoutes from "./features/authentication/routes/auth.route.js";
 import connectDB from './lib/db/db.js';
+import { loadData } from './lib/utils/excel.js';
+
 
 dotenv.config();
 const app = express();
@@ -20,7 +22,7 @@ app.use("/api/logs",logRoutes);
 app.use("/api/auth",authRoutes);
 
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
    console.log(`Server running on port ${PORT}`);
    connectDB();
 });

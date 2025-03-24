@@ -4,20 +4,19 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../../../lib/utils/token.js";
 
 export const login = async (req: Request, res: Response): Promise<any> => {
-    const { email, password } = req.body;
-
+    const { username, password } = req.body;
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ username });
+       
         if (!user)
             return res.status(400).json({ message: "Invalid Credentials" });
 
        const isMatch = await bcrypt.compare(password,user.password);
         if (!isMatch)
             return res.status(400).json({ message: "Invalid Credentials" });
-
-        generateToken(user._id, res);
-
-        res.status(200).json({ _id:user._id});
+        
+        const token = generateToken(user._id, res);
+        res.status(200).json({ token:token});
     } catch (error) {
         res.status(500).json({ message: "Internal Server Error" });
     }
