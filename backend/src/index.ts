@@ -7,6 +7,7 @@ import logRoutes from "./features/logs/routes/log.route.js";
 import authRoutes from "./features/authentication/routes/auth.route.js";
 import connectDB from './lib/db/db.js';
 import { loadData } from './lib/utils/excel.js';
+import { register } from './features/authentication/controllers/auth.controller.js';
 
 
 dotenv.config();
@@ -14,7 +15,11 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+      origin: process.env.CLIENT_URL,
+      credentials: true,
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 

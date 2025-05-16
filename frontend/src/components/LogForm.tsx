@@ -62,22 +62,34 @@ const LogForm = ({ currentLog, title, onClose }: LogFormProps) => {
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-2">
           {/* Inputs */}
           <div className="space-y-2  sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            <Input label="תאריך" type="date" name="date" value={date.toISOString().split('T')[0]} onChange={(e) => setDate(new Date(e.target.value))}/>
-            <Input label="שם לקוח" type="text" name="name" placeholder="הכנס שם לקוח" value={name} onChange={(e) => setName(e.target.value)} required/>
-            <Input label="דגם מכשיר" type="text" name="deviceModel" placeholder="הכנס דגם מכשיר"  value={deviceModel} onChange={(e) => setDeviceModel(e.target.value)} required/>
-            <Input label="IMEI" type="text" name="imei" placeholder="הכנס IMEI"  value={imei} onChange={(e) => setImei(e.target.value)}/>
-            <Input label="תיאור התקלה" type="text" name="faultDescription" placeholder="הכנס תיאור תקלה" value={faultDescription} onChange={(e) => setFaultDescription(e.target.value)}/>
-            <Input label="תיאור תיקון" type="text" name="repairDescription" placeholder="הכנס תיאור תיקון" value={repairDescription} onChange={(e) => setRepairDescription(e.target.value)}/>
-            <Input label="מחיר תיקון" type="number" name="fixingPrice" placeholder="הכנס מחיר תיקון" value={fixingPrice} onChange={(e) => setFixingPrice(Number(e.target.value))} required/>
-            <Input label="עלות חלקים" type="number" name="expense" placeholder="הכנס עלות חלקים" value={expense} onChange={(e) => setExpense(Number(e.target.value))}/>
-            <Input label="מספר תיקון" type="number" name="id" placeholder="הכנס מספר תיקון" value={fixNumber} onChange={(e) => setFixNumber(Number(e.target.value))}/>
-            <Textarea label="הערות" name="comments" placeholder="הכנס הערות" value={comments} onChange={(e) => setComments(e.target.value)}/>
+            <Input
+              label="תאריך"
+              type="date"
+              name="date"
+              value={date instanceof Date && !isNaN(date.getTime())
+                ? date.toISOString().split('T')[0]
+                : new Date().toISOString().split('T')[0]
+              }
+              onChange={(e) => {
+                const newDate = e.target.value ? new Date(e.target.value) : new Date();
+                setDate(newDate);
+              }}
+            />
+            <Input label="שם לקוח" type="text" name="name" placeholder="הכנס שם לקוח" value={name} onChange={(e) => setName(e.target.value)} required />
+            <Input label="דגם מכשיר" type="text" name="deviceModel" placeholder="הכנס דגם מכשיר" value={deviceModel} onChange={(e) => setDeviceModel(e.target.value)} required />
+            <Input label="IMEI" type="text" name="imei" placeholder="הכנס IMEI" value={imei} onChange={(e) => setImei(e.target.value)} />
+            <Input label="תיאור התקלה" type="text" name="faultDescription" placeholder="הכנס תיאור תקלה" value={faultDescription} onChange={(e) => setFaultDescription(e.target.value)} />
+            <Input label="תיאור תיקון" type="text" name="repairDescription" placeholder="הכנס תיאור תיקון" value={repairDescription} onChange={(e) => setRepairDescription(e.target.value)} />
+            <Input label="מחיר תיקון" type="number" name="fixingPrice" placeholder="הכנס מחיר תיקון" value={fixingPrice} onChange={(e) => setFixingPrice(Number(e.target.value))} required />
+            <Input label="עלות חלקים" type="number" name="expense" placeholder="הכנס עלות חלקים" value={expense} onChange={(e) => setExpense(Number(e.target.value))} />
+            <Input label="מספר תיקון" type="number" name="id" placeholder="הכנס מספר תיקון" value={fixNumber} onChange={(e) => setFixNumber(Number(e.target.value))} />
+            <Textarea label="הערות" name="comments" placeholder="הכנס הערות" value={comments} onChange={(e) => setComments(e.target.value)} />
           </div>
 
           {/* Buttons */}
           <div className="col-span-full flex justify-end mt-4">
-            <IconButton icon={<Plus size={16} />} text={currentLog ? "ערוך תיקון" : "הוסף תיקון"} className="py-2 px-2 text-white bg-green-500 hover:bg-green-600"/>
-            <IconButton icon={<X size={16} />} text="בטל" onClick={onClose} className="py-2 px-2 text-white  bg-red-500 hover:bg-red-600 mr-2"/>
+            <IconButton icon={<Plus size={16} />} text={currentLog ? "ערוך תיקון" : "הוסף תיקון"} className="py-2 px-2 text-white bg-green-500 hover:bg-green-600" />
+            <IconButton icon={<X size={16} />} text="בטל" onClick={onClose} className="py-2 px-2 text-white  bg-red-500 hover:bg-red-600 mr-2" />
           </div>
         </form>
       </div>

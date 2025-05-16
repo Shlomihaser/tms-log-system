@@ -3,8 +3,15 @@ import Log from "../../features/logs/models/log.model.js";
 
 
 export const loadData = async () => {
-    const workBook = XLSX.readFile("data.xlsx");
-    const sheetNames = workBook.SheetNames;
+    let workBook;
+    let sheetNames;
+    try{
+        workBook = XLSX.readFile("data.xlsx");
+        sheetNames = workBook.SheetNames;
+    } catch (error) {
+        console.log("Error reading excel file:",error);
+        return;
+    }
 
 
     for (let i = 0; i < sheetNames.length; i++) {

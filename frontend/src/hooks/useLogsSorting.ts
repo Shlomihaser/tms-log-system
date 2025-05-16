@@ -1,50 +1,91 @@
-import { useState, useCallback } from "react";
-import Log from "../types/Log";
+import { useState, useMemo } from 'react';
+import Log from '../types/Log';
+
+type SortDirection = 'asc' | 'desc';
 
 interface UseLogsSortingProps {
   logs: Log[];
 }
 
-const useLogsSorting = ({ logs }: UseLogsSortingProps) => {
-  const [sortColumn, setSortColumn] = useState<keyof Log | null>(null);
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | null>(null);
-  const [sortedLogs, setSortedLogs] = useState<Log[]>(logs);
+interface UseLogsSortingResult {
+  sortColumn: keyof Log | null;
+  sortDirection: SortDirection;
+  sortedLogs: Log[];
+  handleSort: (column: keyof Log) => void;
+}
 
-  const handleSort = useCallback(
-    (column: keyof Log) => {
+const useLogsSorting = ({ logs }: UseLogsSortingProps): UseLogsSortingResult => {
+  const [sortColumn, setSortColumn] = useState<keyof Log | null>('date');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+
+  const handleSort = (column: keyof Log) => {
+    if (sortColumn === column) {
+      // Toggle direction if clicking the same column
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Set new column and default to descending for dates, ascending for everything else
       setSortColumn(column);
-      setSortDirection((prevSortDirection) => {
-        const newDirection =
-          sortColumn === column 
-            ? prevSortDirection === "asc"
-              ? "desc"
-              : "asc"
-            : "asc";
+      setSortDirection(column === 'date' ? 'desc' : 'asc');
+    }
+  };
 
-        setSortedLogs((prevLogs) => {
-          return [...prevLogs].sort((a, b) => {
-            const aValue = a[column];
-            const bValue = b[column];
-            if (aValue === undefined || bValue === undefined) return 0;
+  const sortedLogs = useMemo(() => {
+    console.log('Sorting logs:', logs);
+    
+    // Safety check
+    if (!logs || !Array.isArray(logs) || logs.length === 0) {
+      console.log('No logs to sort or invalid logs array');
+      return [];
+    }
 
-            if (typeof aValue === "string" && typeof bValue === "string") {
-              return newDirection === "asc"
-                ? aValue.localeCompare(bValue)
-                : bValue.localeCompare(aValue);
-            }
-            if (typeof aValue === "number" && typeof bValue === "number") {
-              return newDirection === "asc"
-                ? aValue - bValue
-                : bValue - aValue;
-            }
-            return 0;
-          });
-        });
-        return newDirection
+    // Make a copy to avoid mutating the original
+    const sortedArray = [...logs];
+
+    if (!sortColumn) {
+      console.log('No sort column selected');
+      return sortedArray;
+    }
+
+    try {
+      return sortedArray.sort((a, b) => {
+        // Handle missing or null values (send them to the end)
+        if (a[sortColumn] === undefined || a[sortColumn] === null) return 1;
+        if (b[sortColumn] === undefined || b[sortColumn] === null) return -1;
+
+        // Handle different data types
+        if (sortColumn === 'date') {
+          const dateA = new Date(a.date || 0).getTime();
+          const dateB = new Date(b.date || 0).getTime();
+          return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
+        }
+        
+        if (sortColumn === 'fixingPrice' || sortColumn === 'expense' || sortColumn === 'profit') {
+          const numA = parseFloat(String(a[sortColumn])) || 0;
+          const numB = parseFloat(String(b[sortColumn])) || 0;
+          return sortDirection === 'asc' ? numA - numB : numB - numA;
+        }
+        
+        if (sortColumn === 'fixNumber') {
+          const numA = parseInt(String(a[sortColumn])) || 0;
+          const numB = parseInt(String(b[sortColumn])) || 0;
+          return sortDirection === 'asc' ? numA - numB : numB - numA;
+        }
+
+        // Default string comparison
+        const strA = String(a[sortColumn]).toLowerCase();
+        const strB = String(b[sortColumn]).toLowerCase();
+        
+        if (sortDirection === 'asc') {
+          return strA.localeCompare(strB);
+        } else {
+          return strB.localeCompare(strA);
+        }
       });
-    },
-    [logs, sortColumn, sortDirection] 
-  );
+    } catch (error) {
+      console.error('Error sorting logs:', error);
+      return sortedArray;
+    }
+  }, [logs, sortColumn, sortDirection]);
 
   return {
     sortColumn,

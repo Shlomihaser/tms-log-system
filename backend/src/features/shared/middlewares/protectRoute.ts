@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 import { CustomJwtPayload } from "../../authentication/types/index.js";
 
 export const protectRoute = async (req: Request, res: Response, next: any) => {
-
   
     try {
         const token = req.cookies.jwt;
@@ -20,7 +19,7 @@ export const protectRoute = async (req: Request, res: Response, next: any) => {
             res.status(401).json({ message: "Unauthorized - Invalid Token"});
             return;
         }
-
+        
         const user = await User.findById(decoded.userId).select("-password");
         if(!user){
             res.status(404).json({ message: "User not found"});

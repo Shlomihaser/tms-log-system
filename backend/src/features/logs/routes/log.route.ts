@@ -1,6 +1,6 @@
 import express from "express";
 
-import { addLog, updateLog, deleteLog , getLogs} from "../controllers/log.controller.js";
+import { addLog, updateLog, deleteLog , getLogs, updateLogColor} from "../controllers/log.controller.js";
 import { protectRoute } from "../../shared/middlewares/protectRoute.js";
 
 const router = express.Router();
@@ -13,6 +13,9 @@ router.put("/:id",protectRoute,updateLog);
 
 router.delete("/:id",protectRoute,deleteLog);
 
+
+router.put('/:id/color', protectRoute,updateLogColor);
+  
 export default router;
 
 
