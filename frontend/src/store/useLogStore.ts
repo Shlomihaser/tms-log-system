@@ -102,7 +102,8 @@ const useLogStore = create<LogStore>((set, get) => {
     },
 
     editLog: async (data: Log) => {
-      set({ isLoading: true });
+    // set({ isLoading: true });
+    
       try {
         await axiosInstance.put(`/logs/${data._id}`, data);
         toast.success("Log updated successfully");
@@ -118,7 +119,7 @@ const useLogStore = create<LogStore>((set, get) => {
       } catch (error) {
         handleApiError(error);
       } finally {
-        set({ isLoading: false });
+       // set({ isLoading: false });
       }
     },
 

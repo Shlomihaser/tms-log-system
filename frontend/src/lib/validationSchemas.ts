@@ -1,7 +1,11 @@
 import { z } from "zod";
 
 export const logSchema = z.object({
-  date: z.string().transform((val) => new Date(val)),
+  date: z.string()
+    .refine(val => !isNaN(Date.parse(val)), {
+      message: "Invalid date format"
+    })
+    .transform((val) => new Date(val)),
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   deviceModel: z
     .string()

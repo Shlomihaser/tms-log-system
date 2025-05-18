@@ -1,8 +1,8 @@
 import { useState } from "react";
-import  useLogStore  from "../store/useLogStore";
+import useLogStore from "../store/useLogStore";
 import Log from "../types/Log";
 import toast from "react-hot-toast";
-import { logSchema,LogSchemaType } from "../lib/validationSchemas";
+import { logSchema, LogSchemaType } from "../lib/validationSchemas";
 
 interface UseLogFormProps {
   currentLog?: Log;
@@ -12,7 +12,7 @@ interface UseLogFormProps {
 const useLogForm = ({ currentLog, onClose }: UseLogFormProps) => {
   const { addLog, editLog } = useLogStore();
 
-  const initialDate = currentLog?.date ? currentLog.date : new Date();
+  const initialDate = currentLog?.date ? new Date(currentLog.date) : new Date();
 
   const [date, setDate] = useState<Date>(initialDate);
   const [name, setName] = useState<string>(currentLog?.name || "");
@@ -25,11 +25,22 @@ const useLogForm = ({ currentLog, onClose }: UseLogFormProps) => {
   const [comments, setComments] = useState<string>(currentLog?.comments || "");
   const [fixNumber, setFixNumber] = useState<number>(currentLog?.fixNumber || 0);
 
-  const handleLogSubmit = async (logData: LogSchemaType) => {
+  const handleLogSubmit = async (logData: Omit<LogSchemaType, 'date'> & { date: Date }) => {
     try {
-      logSchema.parse(logData);
+      // Convert Date object to ISO string before validation
+      const dataToValidate = {
+        ...logData,
+        date: logData.date.toISOString(),
+      };
+      
+      console.log("Submitting log:", dataToValidate);
+      logSchema.parse(dataToValidate);
+      
       if (currentLog) {
-        await editLog({ ...currentLog, ...logData });
+        await editLog({ 
+          ...currentLog, 
+          ...logData,
+        });
         toast.success("Log updated successfully");
       } else {
         await addLog(logData as Log);
@@ -37,6 +48,7 @@ const useLogForm = ({ currentLog, onClose }: UseLogFormProps) => {
       }
       onClose();
     } catch (error: any) {
+      console.log("Error submitting log:", error);
       if (error.errors) {
         error.errors.forEach((e: any) => toast.error(e.message));
       } else {
@@ -44,7 +56,6 @@ const useLogForm = ({ currentLog, onClose }: UseLogFormProps) => {
         console.error("Submission error:", error);
       }
     }
-    
   };
 
   return {

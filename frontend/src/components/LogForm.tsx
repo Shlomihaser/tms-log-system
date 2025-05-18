@@ -35,7 +35,7 @@ const LogForm = ({ currentLog, title, onClose }: LogFormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formRef.current) return;
-
+    
     const parsedFixingPrice = safeParseFloat(fixingPrice);
     const parsedExpense = safeParseFloat(expense);
 
