@@ -12,14 +12,26 @@ interface TableHeaderProps {
   column: keyof Log;
   label: string;
 }
+interface LogsTableProps {
+  startDate: Date | null;
+  endDate: Date | null;
+}
 
-const LogsTable = () => {
+
+const LogsTable = ({ startDate, endDate }: LogsTableProps) => {
   const { filteredLogs, deleteLog, getLogs, isLoading,updateLogColor } = useLogStore();
   const [editLog, setEditLog] = useState<Log | null>(null);
   const { sortColumn, sortDirection, sortedLogs, handleSort } = useLogsSorting({
     logs: filteredLogs,
   });
   const [colorPaletteOpenForId, setColorPaletteOpenForId] = useState<string | null>(null);
+
+
+  const filteredByDate = sortedLogs.filter((log) => {
+  if (!startDate || !endDate) return true; // אין סינון
+  const logDate = new Date(log.date);
+  return logDate >= startDate && logDate <= endDate;
+});
 
   // Create a ref for the color palette container
   const colorPaletteRef = useRef<HTMLDivElement>(null);
@@ -114,7 +126,7 @@ const LogsTable = () => {
             </thead>
 
             <tbody className="text-gray-700">
-              {sortedLogs.map((log: Log) => (
+              {filteredByDate.map((log: Log) => (
                 <tr key={log._id} className="border-b border-gray-200" style={{ backgroundColor: log.tableColor || 'transparent' }}>
                   <TableCell value={log.date ? formatDate(new Date(log.date)) : '-'} />
                   <TableCell value={log.name} />
