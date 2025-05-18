@@ -128,10 +128,10 @@ const useLogStore = create<LogStore>((set, get) => {
 
         set({
           logs: get().logs.map((log) =>
-            log._id === id ? { ...log, color } : log
+            log._id === id ? { ...log, tableColor:color } : log
           ),
           filteredLogs: get().filteredLogs.map((log) =>
-            log._id === id ? { ...log, color } : log
+            log._id === id ? { ...log,tableColor: color } : log
           ),
         });
       } catch (error: any) {
